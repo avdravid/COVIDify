@@ -68,7 +68,7 @@ def upload():
 
 # only true if you run script directly, if imported will be false
 if __name__ == '__main__':
-    logging.basicConfig(filename='kiosk.log', format='%(asctime)s %(levelname)-8s %(message)s',
+    logging.basicConfig(filename='app.log', format='%(asctime)s %(levelname)-8s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S', filemode='w', level=logging.INFO)
     logging.info('Started')
     app.run(debug=True)
