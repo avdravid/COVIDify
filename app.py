@@ -6,8 +6,6 @@ from werkzeug.utils import secure_filename
 import os
 import shutil
 from os import path
-import gnupg
-from dashboard_generator import generate_dashboard
 import logging
 
 app = Flask(__name__)
@@ -15,48 +13,30 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '6e8af7ecab9c7e41e861fa359a89f385'
 
 # support bundles should be .tar.gpg, process will fail and exit otherwise
-ALLOWED_EXTENSIONS = {'gpg'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
+def gan_generate(imagepath):
+    #generate new image from upload
+    return 
 
 # check if file has correct extension
-try:
-    logging.info("Trying to remove existing support bundle if still present")
-    shutil.rmtree("support")
-
-except:
-    logging.info("No existing support bundle")
-    pass
-
-try:
-
-    uploads = os.listdir('uploads')
-    for upload in uploads:
-        logging.info('Removing file: ' + upload + 'in uploads')
-        os.remove(os.path.join('uploads', upload))
-    os.remove('decrypted.tar')
-except:
-    pass
-
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[-1].lower() in ALLOWED_EXTENSIONS
 
-# get Cisco favicon
-
-
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # render home landing page
-
-
 @app.route("/")
 def home():
     return render_template("home.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 # path for upload page to upload file and enter gpg decryption key
-
-
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     logging.info('Uploading file')
@@ -68,10 +48,9 @@ def upload():
         filename = secure_filename(form.file.data.filename)
         if not allowed_file(filename):
             logging.info('Illegal file extension')
-
-            flash('File must have extension .tar.gpg', 'danger')
+            flash('File must have extension .jpg, .jpeg, or .png', 'danger')
         else:
-            flash('File Accepted', 'success')
+            flash('File accepted!', 'success')
 
             # save accepted file to uploads folder
             try:
@@ -81,31 +60,11 @@ def upload():
                 logging.info('Failed to save file')
             # decrypt gpg to decrypted.tar and remove original gpg
             cwd = os.getcwd()
-            gpg = gnupg.GPG(gnupghome=cwd+'/uploads/')
 
             with open(cwd+'/uploads/'+filename, 'rb') as f:
-                logging.info('GPG decryption process beginning')
-                try:
-                    status = gpg.decrypt_file(
-                        file=f, passphrase=form.password.data, output='decrypted.tar')
-                    logging.info('GPG decryption successful')
-                except:
-                    logging.error('GPG decryption failed')
-                if not status.ok:
-                    os.remove('uploads/'+filename)
-                    flash('GPG Decryption Failed', 'danger')
-                    flash("Error Message: " +
-                          status.stderr, 'danger')
-                    return redirect(url_for('upload'))
-                else:
-                    os.remove('uploads/'+filename)
-                    # redirect to next decompression step
-                    return redirect(url_for('decompress'))
+                logging.info('Image generation process beginning')
 
     return render_template('upload.html', form=form)
-
-# page with button to decompress the already decrypted .tar file
-
 
 # only true if you run script directly, if imported will be false
 if __name__ == '__main__':
