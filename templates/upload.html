@@ -1,0 +1,35 @@
+{%extends "layout.html"%}
+{%block content%}
+    <form method="post" enctype="multipart/form-data">
+         {{form.hidden_tag()}}
+               <fieldset class = "form-group"> 
+                  
+                  <legend class= "border-bottom mb-4">Upload Support Bundle</legend>
+                  <div class = "form-group">
+                     {{ form.hidden_tag() }}
+                     {{ form.file }}
+
+                  </div>
+                  <div class = "form-group">
+                     {{form.password.label('GPG Encryption Key')}}
+                     {% if form.password.errors %}
+                           {{form.password(class="form-control form-control-lg is-invalid")}}
+                              <div class = "invalid-feedback">
+                                 {% for error in form.password.errors %}
+                                       <span> {{ error }} </span>
+                                 {%endfor%}
+                              </div>
+                     {%else%}
+                           {{form.password(class = "form-control form-control-lg")}}
+                     {%endif%}
+                  </div>
+                  <div class = "form-group">
+                     <input type="submit">
+                  </div>
+
+               </fieldset>
+
+      </form>
+
+{% endblock content %}
+
