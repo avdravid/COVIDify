@@ -1,6 +1,6 @@
-# Cisco Log Analysis & Remediation Kiosk
+# COVID-19 Lung GAN Generator
 
-Hi, welcome to my Cisco software engineer intern repository for the Summer of 2020! This is the Cisco Log Analysis & Remediation Kiosk, a project I worked on for the Identity Services Engine (ISE) team during the last few weeks of my internship. This Flask application is designed to assist escalation engineers in troubleshooting common ISE configuration issues. 
+Hi, welcome to our entry for PenApps XXI!
 
 The structure of this repo is as follows:
 
