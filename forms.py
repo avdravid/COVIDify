@@ -15,12 +15,10 @@ class RegistrationForm(FlaskForm):
 
 
 class ButtonForm(FlaskForm):
-    submit = SubmitField('Generate Dashboard')
+    submit = SubmitField('Generate Image')
+
 
 class UploadForm(FlaskForm):
-    # username = StringField('Username', validators=[
-    #                        DataRequired(), Length(min=2, max=20)])
-    password = PasswordField('Password', validators=[DataRequired()])
     file = FileField()
 
 
