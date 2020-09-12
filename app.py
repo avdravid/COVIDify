@@ -25,7 +25,7 @@ def allowed_file(filename):
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(path.join(app.root_path, 'static'), 'virus.png')
 
 # render home landing page
 @app.route("/")
@@ -35,6 +35,10 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/info")
+def info():
+    return render_template("info.html")
 
 # path for upload page to upload file and enter gpg decryption key
 @app.route("/upload", methods=['GET', 'POST'])
@@ -65,6 +69,14 @@ def upload():
                 logging.info('Image generation process beginning')
 
     return render_template('upload.html', form=form)
+
+@app.route("/loading")
+def loading():
+    return render_template("loading.html")
+
+@app.route("/results")
+def results():
+    return render_template("results.html")
 
 # only true if you run script directly, if imported will be false
 if __name__ == '__main__':

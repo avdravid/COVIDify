@@ -1,15 +1,19 @@
 {%extends "layout.html"%}
 {%block content%}
-    <form method="post" enctype="multipart/form-data">
+   <div class="column centered-container page-header">
+      <h1>COVID-19 Lung Scanner</h1>
+      <p class="info">Upload Your X-Ray Image (only accepts .jpg, .jpeg, and .png extensions)</p>
+   </div>
+    <form method="post" enctype="multipart/form-data" class="column centered-container">
          {{form.hidden_tag()}}
                <fieldset class = "form-group"> 
-                  
-                  <legend class= "border-bottom mb-4">Upload Your X-Ray Image (only accepts .jpg, .jpeg, and .png extensions)</legend>
+
                   <div class = "form-group">
                      {{ form.hidden_tag() }}
                      {{ form.file }}
 
                   </div>
+
                   <div class = "form-group">
                      <input type="submit">
                   </div>
@@ -19,4 +23,5 @@
       </form>
 
 {% endblock content %}
+
 

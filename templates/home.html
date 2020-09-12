@@ -1,12 +1,41 @@
-{%extends "layout.html"%} {%block content%}
-<article class="media content-section">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2">Welcome to our submission for PennApps XXI!</a>
-    </div>
-    <p class="article-content">This is application uses a generative adversarial network (GAN) to overlay COVID-19 features onto x-ray images of healthy lungs.
-    Our hope is to extend this platform to novel diseases as they appear to specifically identify problem areas and physiological changes in internal organs.</p>
-  </div>
-</article>
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% endblock content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type = "text/css" href= "{{url_for('static', filename='main.css' )}} ">
+    
+    <!-- Tab Icon -->
+    <link rel="icon" href="../static/virus.png">
+
+    {%if title%}
+    <title>Disease X-Ray GAN - {{title}} </title>
+    {%else%}
+    <title>COVID-19 Effects</title>
+    {%endif%}
+</head>
+<body>
+    <div class="column centered-container page-header seventy">
+        <div class="column centered-container body">
+          <h1>COVID-19 Lung Scanner</h1>
+          <p class="info">This is application uses a generative adversarial network (GAN) to overlay COVID-19 features onto x-ray images of healthy lungs.
+            Our hope is to extend this platform to novel diseases as they appear to specifically identify problem areas and physiological changes in internal organs.</p>
+        </div>
+        <button class="styled-button">
+          <a class="custom-button" href="{{ url_for('upload') }}">SCANNER</a>
+        </button>
+    </div>
+    <footer class="footer-container fixed-bottom">
+        <div>
+            PennHacks Fall 2020
+        </div>
+        <div class="credits">
+            - Amil Dravid, Gabriel Guo, John Zhou, Olivia Lee -
+        </div>
+    </footer>
+</body>
+</html>

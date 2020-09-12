@@ -8,53 +8,52 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type = "text/css" href= "{{url_for('static', filename='main.css' )}} ">
+    
+    <!-- Tab Icon -->
+    <link rel="icon" href="../static/virus.png">
 
+    <!-- Font imports -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap" rel="stylesheet">
     {%if title%}
     <title>Disease X-Ray GAN - {{title}} </title>
     {%else%}
-    <title>See the Effects of COVID-19</title>
+    <title>COVID-19 Effects</title>
     {%endif%}
 </head>
 <body>
     <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-        <a class="navbar-brand mr-4" href="/">DXG</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-            <a class="nav-item nav-link" href="{{ url_for('upload') }}">Upload</a>
-
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
-
-            </div>
-        </div>
-        </div>
-    </nav>
+        <nav class="header-container fixed-top">
+            <a class="nav-item" href="{{ url_for('home') }}">HOME</a>
+            <a class="nav-item" href="{{ url_for('upload') }}">SCAN</a>
+            <a class="nav-item" href="{{ url_for('info') }}">INFO</a>
+        </nav>
     </header>
     <main role="main" class="container">
-    <div class="row">
-        <div class="col-md-8">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {%if messages%}
-                {%for category, message in messages%}
-                    <div class="alert alert-{{category}}">
-                        {{message}}
-                    </div>
-                {%endfor%}
-            {%endif%}
-        {%endwith%}
-        {% block content %}{% endblock %}
+    <!-- <div class="row"> -->
+        <div class="column">  
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {%if messages%}
+                    {%for category, message in messages%}
+                        <div class="alert alert-{{category}}">
+                            {{message}}
+                        </div>
+                    {%endfor%}
+                {%endif%}
+            {%endwith%}
+            {% block content %}{% endblock %}
         </div>
         
-    </div>
+    <!-- </div> -->
     </main>
+    <footer class="footer-container fixed-bottom">
+        <div>
+            PennHacks Fall 2020
+        </div>
+        <div class="credits">
+            - Amil Dravid, Gabriel Guo, John Zhou, Olivia Lee -
+        </div>
+          
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
