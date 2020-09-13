@@ -30,9 +30,9 @@
       rel="stylesheet"
     />
     {%if title%}
-    <title>Disease X-Ray GAN - {{title}}</title>
+    <title>COVIDify - {{title}}</title>
     {%else%}
-    <title>COVID-19 Effects</title>
+    <title>COVIDify</title>
     {%endif%}
 
   </head>
@@ -55,7 +55,8 @@
           <h1>COVID-19 Lung Scanner</h1>
           <p class="info">
             Upload Your X-Ray Image (only accepts .jpg, .jpeg, and .png
-            extensions)
+            extensions). We will then use machine learning techniques to add features indicative of COVID-19, applying the use of Generative Adversarial Networks (GANs) to create a new image of the same lungs except with added COVID-19 properties. COVID-19 may manifest in an x-ray as cloudy regions in the lungs, known as ground glass opacities.  
+
           </p>
         </div>
         <div>
