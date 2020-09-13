@@ -23,7 +23,7 @@ def allowed_file(filename):
 
 def gan_generate(imagepath):
     # generate new image from upload
-    time.sleep(5)
+    time.sleep(2)
 # check if file has correct extension
 
 
@@ -75,7 +75,7 @@ def upload():
         else:
             # save accepted file to uploads folder
             try:
-                form.file.data.save('uploads/' + filename)
+                form.file.data.save('static/uploads/original.jpg')
                 logging.info('File saved locally')
             except:
                 logging.info('Failed to save file')

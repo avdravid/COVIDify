@@ -1,14 +1,16 @@
-2020-09-12 17:53:12 INFO     Started
-2020-09-12 17:53:12 WARNING   * Debugger is active!
-2020-09-12 17:53:12 INFO      * Debugger PIN: 197-827-445
-2020-09-12 17:53:17 INFO     127.0.0.1 - - [12/Sep/2020 17:53:17] "[37mGET / HTTP/1.1[0m" 200 -
-2020-09-12 17:53:20 INFO     Uploading file
-2020-09-12 17:53:20 INFO     127.0.0.1 - - [12/Se2020-09-12 17:53:36 INFO     Finished
-P/1.1[0m" 200 -
-2020-09-12 17:53:26 INFO     Uploading file
-2020-09-12 17:53:26 INFO     File validated
-2020-09-12 17:53:27 INFO     File saved locally
-2020-09-12 17:53:27 INFO     Image generation process beginning
-2020-09-12 17:53:32 INFO     127.0.0.1 - - [12/Sep/2020 17:53:32] "[37mPOST /upload HTTP/1.1[0m" 200 -
-2020-09-12 17:53:32 INFO     127.0.0.1 - - [12/Sep/2020 17:53:32] "[33mGET /temp.png HTTP/1.1[0m" 404 -
-2020-09-12 17:53:36 INFO     Finished
+2020-09-12 19:52:16 INFO     Started
+2020-09-12 19:52:16 WARNING   * Debugger is active!
+2020-09-12 19:52:16 INFO      * Debugger PIN: 197-827-445
+2020-09-12 19:52:43 INFO     127.0.0.1 - - [12/Sep/2020 19:52:43] "[33mGET /static/uploads/original.jpg HTTP/1.1[0m" 404 -
+2020-09-12 19:52:44 INFO     127.0.0.1 - - [12/Sep/2020 19:52:44] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -
+2020-09-12 19:52:47 INFO     127.0.0.1 - - [12/Sep/2020 19:52:47] "[37mGET / HTTP/1.1[0m" 200 -
+2020-09-12 19:52:52020-09-12 19:53:04 INFO     Finished
+9:52:51 INFO     127.0.0.1 - - [12/Sep/2020 19:52:51] "[37mGET /upload HTTP/1.1[0m" 200 -
+2020-09-12 19:52:55 INFO     Uploading file
+2020-09-12 19:52:55 INFO     File validated
+2020-09-12 19:52:55 INFO     File saved locally
+2020-09-12 19:52:55 INFO     Image generation process beginning
+2020-09-12 19:52:57 INFO     127.0.0.1 - - [12/Sep/2020 19:52:57] "[37mPOST /upload HTTP/1.1[0m" 200 -
+2020-09-12 19:52:57 INFO     127.0.0.1 - - [12/Sep/2020 19:52:57] "[37mGET /static/uploads/original.jpg HTTP/1.1[0m" 200 -
+2020-09-12 19:52:57 INFO     127.0.0.1 - - [12/Sep/2020 19:52:57] "[33mGET /temp.png HTTP/1.1[0m" 404 -
+2020-09-12 19:53:04 INFO     Finished
