@@ -78,8 +78,6 @@ def results():
     return render_template("results.html")
 
 # path for upload page to upload file
-
-
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     logging.info('Uploading file')
@@ -286,7 +284,7 @@ def make_stuff(image):
     mask = torch.ones([1, 3, 64, 64]).to(device)
     mask[0, :, 4:60, 20:60] = 2
 
-    for epoch in range(0, 20):
+    for epoch in range(0, 3):
         print('Epoch: ' + str(epoch))
         original_image = image[0].to(device)
         optim.zero_grad()
