@@ -8,6 +8,15 @@ import shutil
 from os import path
 import time
 import logging
+import torch
+import torch.nn as nn
+import torchvision.transforms as transforms
+from torchvision import models
+
+device = torch.device('cpu')
+
+if torch.cuda.is_available():
+    device = torch.device('cuda')
 
 app = Flask(__name__)
 
@@ -86,11 +95,118 @@ def upload():
 
             # here trigger the loady wheel
 
-            gan_generate("dummy_path")
+            gan_generate()
             return render_template('results.html')
 
     return render_template('upload.html', form=form)
 
+
+nz = 100
+ngf = 64
+ndf = 64
+nl = 2
+nc = 3
+
+class Generator(torch.nn.Module):
+
+    def __init__(self):
+
+        super(Generator, self).__init__()
+
+        self.main = nn.Sequential(
+            # input is Z, going into a convolution
+            nn.ConvTranspose2d(
+                in_channels=nz + nl,
+                out_channels=ngf * 8,
+                kernel_size=4,
+                stride=1,
+                padding=0,
+                bias=False
+            ),
+            nn.BatchNorm2d(
+                num_features=ngf * 8
+            ),
+            nn.ReLU(
+                inplace=True
+            ),
+
+            # state size. (ngf*8) x 4 x 4
+            nn.ConvTranspose2d(
+                in_channels=ngf * 8,
+                out_channels=ngf * 4,
+                kernel_size=4,
+                stride=2,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm2d(
+                num_features=ngf * 4
+            ),
+            nn.ReLU(
+                inplace=True
+            ),
+
+            # state size. (ngf*4) x 8 x 8
+            nn.ConvTranspose2d(
+                in_channels=ngf * 4,
+                out_channels=ngf * 2,
+                kernel_size=4,
+                stride=2,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm2d(
+                num_features=ngf * 2
+            ),
+            nn.ReLU(
+                inplace=True
+            ),
+
+            # state size. (ngf*2) x 16 x 16
+            nn.ConvTranspose2d(
+                in_channels=ngf * 2,
+                out_channels=ngf,
+                kernel_size=4,
+                stride=2,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm2d(
+                num_features=ngf
+            ),
+            nn.ReLU(
+                inplace=True
+            ),
+
+            # state size. (ngf) x 32 x 32
+            nn.ConvTranspose2d(
+                in_channels=ngf,
+                out_channels=nc,
+                kernel_size=4,
+                stride=2,
+                padding=1,
+                bias=False
+            ),
+            nn.Tanh()
+            # state size. (nc) x 64 x 64
+        )
+
+def weights_init(m):
+
+    classname = m.__class__.__name__
+
+    if classname.find('Conv') != -1:
+        nn.init.normal_(m.weight.data, 0.0, 0.02)
+
+    elif classname.find('BatchNorm') != -1:
+        nn.init.normal_(m.weight.data, 1.0, 0.02)
+        nn.init.constant_(m.bias.data, 0)
+
+
+# Initialize Models
+PATH = './lung_generator.pth'
+netG = Generator().to(device)
+netG.load_state_dict(torch.load(PATH))
 
 # only true if you run script directly, if imported will be false
 if __name__ == '__main__':
