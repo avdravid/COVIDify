@@ -5,7 +5,6 @@ Hi, welcome to our entry for PenApps XXI!
 The structure of this repo is as follows:
 
 Current layout of project
-- app.py – main project folder
 - static
     - virus.png – icon
     - main.css – CSS formatting
@@ -18,5 +17,5 @@ Current layout of project
     - info.html - general information about this web app and additional redirect links about COVID-19
 - .gitignore – standard .gitignore file for commits
 - forms.py – outlines flask_wtf forms to be used 
-- app.py – main Flask application file
+- app.py – main Flask project folder
 - README.md – this!
