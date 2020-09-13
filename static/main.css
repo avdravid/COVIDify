@@ -151,6 +151,10 @@ a.nav-item:hover {
   width: 60%;
 }
 
+.info-small {
+  width:50%
+}
+
 .page-header {
   margin-bottom: 2em;
 }
