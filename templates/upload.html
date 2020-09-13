@@ -1,27 +1,104 @@
-{%extends "layout.html"%}
-{%block content%}
-   <div class="column centered-container page-header">
-      <h1>COVID-19 Lung Scanner</h1>
-      <p class="info">Upload Your X-Ray Image (only accepts .jpg, .jpeg, and .png extensions)</p>
-   </div>
-    <form method="post" enctype="multipart/form-data" class="column centered-container">
-         {{form.hidden_tag()}}
-               <fieldset class = "form-group"> 
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-                  <div class = "form-group">
-                     {{ form.hidden_tag() }}
-                     {{ form.file }}
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static', filename='main.css' )}} "
+    />
 
-                  </div>
+    <!-- Tab Icon -->
+    <link rel="icon" href="../static/virus.png" />
 
-                  <div class = "form-group">
-                     <input type="submit">
-                  </div>
+    <!-- Font imports -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    {%if title%}
+    <title>Disease X-Ray GAN - {{title}}</title>
+    {%else%}
+    <title>COVID-19 Effects</title>
+    {%endif%}
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="header-container fixed-top">
+        <a class="nav-item" href="{{ url_for('home') }}">HOME</a>
+        <a class="nav-item" href="{{ url_for('upload') }}">SCAN</a>
+        <a class="nav-item" href="{{ url_for('info') }}">INFO</a>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <!-- <div class="row"> -->
+      <div class="column">
+        {% with messages = get_flashed_messages(with_categories=true) %} {%if
+        messages%} {%for category, message in messages%}
+        <div class="alert alert-{{category}}">{{message}}</div>
+        {%endfor%} {%endif%} {%endwith%}
+        <div class="column centered-container page-header">
+          <h1>COVID-19 Lung Scanner</h1>
+          <p class="info">
+            Upload Your X-Ray Image (only accepts .jpg, .jpeg, and .png
+            extensions)
+          </p>
+        </div>
+        <form
+          method="post"
+          enctype="multipart/form-data"
+          class="column centered-container"
+        >
+          {{form.hidden_tag()}}
+          <fieldset class="form-group">
+            <div class="form-group">
+              {{ form.hidden_tag() }} {{ form.file }}
+            </div>
+            <div class="form-group">
+              <input type="submit" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
-               </fieldset>
+      <!-- </div> -->
+    </main>
+    <footer class="footer-container fixed-bottom">
+      <div>PennHacks Fall 2020</div>
+      <div class="credits">
+        - Amil Dravid, Gabriel Guo, John Zhou, Olivia Lee -
+      </div>
+    </footer>
 
-      </form>
-
-{% endblock content %}
-
-
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

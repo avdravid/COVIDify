@@ -2,13 +2,13 @@ body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 h1 {
   color: #049fd9;
   margin-bottom: 0.5em;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 h2,
@@ -101,7 +101,7 @@ a.article-title:hover {
   justify-content: center;
 }
 
-.footer-container { 
+.footer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,12 +112,12 @@ a.article-title:hover {
 .nav-item {
   padding: 5px;
   margin: 0 20px;
-  border-bottom: 1px solid rgb(0,0,0,0.5);
+  border-bottom: 1px solid rgb(0, 0, 0, 0.5);
   color: rgb(0, 0, 0, 0.5);
 }
 
-.nav-item:hover { 
-  border-bottom: 1px solid rgb(0,0,0,1);
+.nav-item:hover {
+  border-bottom: 1px solid rgb(0, 0, 0, 1);
   color: rgb(0, 0, 0, 1);
 }
 
@@ -135,13 +135,12 @@ a.nav-item:hover {
   align-items: center;
 }
 
-
 .seventy {
   width: 70%;
   margin: 0 auto;
 }
 
-.info { 
+.info {
   width: 40%;
 }
 
@@ -157,19 +156,19 @@ button {
   border: none;
   padding: 0.5em 1.25em;
   border-radius: 6px;
-  background-color: #D1E4F5;
-  box-shadow: 4px 4px 10px rgba(0,0,0, 0.15);
+  background-color: #d1e4f5;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .styled-button:hover {
-  background-color: #C6E3FE;
+  background-color: #c6e3fe;
 }
 
 a.custom-button {
-  color: #3D3D3D;
+  color: #3d3d3d;
 }
 
-a.custom-button:hover { 
+a.custom-button:hover {
   text-decoration: none;
 }
 
@@ -184,13 +183,21 @@ a.custom-button:hover {
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* side by side view of images (comparison), fills to size w/o morphing actual image */
@@ -198,7 +205,6 @@ a.custom-button:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-
 }
 .img-fitted {
   width: 250px;
