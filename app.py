@@ -9,9 +9,20 @@ from os import path
 import time
 import logging
 import torch
+import torchvision
 import torch.nn as nn
 import torchvision.transforms as transforms
 from torchvision import models
+from PIL import Image
+from torchvision.utils import save_image
+from torch.autograd import Variable
+import numpy as np
+
+nz = 100
+ngf = 64
+ndf = 64
+nl = 2
+nc = 3
 
 device = torch.device('cpu')
 
@@ -24,6 +35,8 @@ app.config['SECRET_KEY'] = '6e8af7ecab9c7e41e861fa359a89f385'
 
 # support bundles should be .tar.gpg, process will fail and exit otherwise
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+# Initialize Models
+PATH = './lung_generator.pth'
 
 
 def allowed_file(filename):
@@ -33,7 +46,7 @@ def allowed_file(filename):
 def gan_generate():
     # generate new image from upload here
     # the uploaded image will be in static/uploads/original.jpg
-    time.sleep(2)
+    make_stuff(transform_image())
     # write new image to static/uploads/covidified.jpg
 # check if file has correct extension
 
@@ -100,12 +113,6 @@ def upload():
 
     return render_template('upload.html', form=form)
 
-
-nz = 100
-ngf = 64
-ndf = 64
-nl = 2
-nc = 3
 
 class Generator(torch.nn.Module):
 
@@ -191,22 +198,147 @@ class Generator(torch.nn.Module):
             # state size. (nc) x 64 x 64
         )
 
-def weights_init(m):
+    def forward(self, inputs, condition):
+        # Concatenate Noise and Condition
+        cat_inputs = torch.cat(
+            (inputs, condition),
+            dim=1
+        )
 
-    classname = m.__class__.__name__
+        # Reshape the latent vector into a feature map.
+        cat_inputs = cat_inputs.unsqueeze(2).unsqueeze(3)
 
-    if classname.find('Conv') != -1:
-        nn.init.normal_(m.weight.data, 0.0, 0.02)
-
-    elif classname.find('BatchNorm') != -1:
-        nn.init.normal_(m.weight.data, 1.0, 0.02)
-        nn.init.constant_(m.bias.data, 0)
+        return self.main(cat_inputs)
 
 
-# Initialize Models
-PATH = './lung_generator.pth'
 netG = Generator().to(device)
-netG.load_state_dict(torch.load(PATH))
+netG.load_state_dict(torch.load(PATH, map_location=device))
+
+
+class SquashTransform:
+    def __call__(self, inputs):
+        return 2 * inputs - 1
+
+
+def transform_image():
+    img = Image.open('./static/uploads/original.jpg')
+    data_transform = transforms.Compose([
+        transforms.Resize(64),
+        transforms.ToTensor(),
+        SquashTransform()
+    ])
+    return data_transform(img).unsqueeze(0)
+
+
+class VGGPerceptualLoss(torch.nn.Module):
+    def __init__(self, resize=True):
+        super(VGGPerceptualLoss, self).__init__()
+        blocks = []
+        blocks.append(torchvision.models.vgg16(
+            pretrained=True).features[:4].eval())
+        blocks.append(torchvision.models.vgg16(
+            pretrained=True).features[4:9].eval())
+        blocks.append(torchvision.models.vgg16(
+            pretrained=True).features[9:16].eval())
+        blocks.append(torchvision.models.vgg16(
+            pretrained=True).features[16:23].eval())
+        for bl in blocks:
+            for p in bl:
+                p.requires_grad = False
+        self.blocks = torch.nn.ModuleList(blocks)
+        self.transform = torch.nn.functional.interpolate
+        self.mean = torch.nn.Parameter(torch.tensor(
+            [0.485, 0.456, 0.406]).view(1, 3, 1, 1))
+        self.std = torch.nn.Parameter(torch.tensor(
+            [0.229, 0.224, 0.225]).view(1, 3, 1, 1))
+        self.resize = resize
+
+    def forward(self, input, target):
+        if input.shape[1] != 3:
+            input = input.repeat(1, 3, 1, 1)
+            target = target.repeat(1, 3, 1, 1)
+        input = (input-self.mean) / self.std
+        target = (target-self.mean) / self.std
+        if self.resize:
+            input = self.transform(input, mode='bilinear', size=(
+                224, 224), align_corners=False)
+            target = self.transform(target, mode='bilinear', size=(
+                224, 224), align_corners=False)
+        loss = 0.0
+        x = input
+        y = target
+        for block in self.blocks:
+            x = block(x)
+            y = block(y)
+            loss += torch.nn.functional.l1_loss(x, y)
+        return loss
+
+
+def make_stuff(image):
+    init_noise = Variable(torch.randn(
+        1, nz
+    ).to(device), requires_grad=True)
+
+    negative_label = torch.Tensor([[1, 0]]).to(device)
+    positive_label = torch.Tensor([[0, 1]]).to(device)
+
+    optim = torch.optim.Adam([init_noise], lr=0.1, betas=(0.5, 0.999))
+    original_image = image[0].to(device)
+    mask = torch.ones([1, 3, 64, 64]).to(device)
+    mask[0, :, 4:60, 20:60] = 2
+
+    for epoch in range(0, 20):
+        print('Epoch: ' + str(epoch))
+        original_image = image[0].to(device)
+        optim.zero_grad()
+        sample = netG(init_noise, negative_label).to(device)
+        sample = sample.reshape([1, 3, 64, 64])
+        original_image = original_image.reshape([1, 3, 64, 64])
+        loss_func = VGGPerceptualLoss().to(device)
+        loss = loss_func(sample, original_image) + 10 * \
+            torch.mean(mask*(original_image - sample)**2)
+        #loss = 100* torch.mean(mask*(original_image - sample)**2)
+        loss.backward()
+        optim.step()
+
+        if (epoch+1) % 10 == 0:
+            reconstructed_image = netG(
+                init_noise, negative_label
+            ).detach().cpu().view(-1, 3, 64, 64)
+
+            reconstructed_image = reconstructed_image[0, ]
+
+            original_image = original_image.cpu().view(3, 64, 64)
+            original_image = np.transpose(original_image, (1, 2, 0))
+            original_image = (original_image + 1)/2
+
+            reconstructed_image = np.transpose(reconstructed_image, (1, 2, 0))
+            reconstructed_image = (reconstructed_image + 1)/2
+
+    original_image = image[0].to(device)
+    reconstructed_image_positive = netG(
+        init_noise, positive_label
+    ).detach().cpu().view(-1, 3, 64, 64)
+
+    reconstructed_image_positive = reconstructed_image_positive[0, ]
+
+    reconstructed_image_negative = netG(
+        init_noise, negative_label
+    ).detach().cpu().view(-1, 3, 64, 64)
+
+    reconstructed_image_negative = reconstructed_image_negative[0, ]
+
+    original_image = original_image.cpu().view(3, 64, 64)
+    original_image = np.transpose(original_image, (1, 2, 0))
+    original_image = (original_image + 1)/2
+
+    reconstructed_image_negative = np.transpose(
+        reconstructed_image_negative, (1, 2, 0))
+    reconstructed_image_negative = (reconstructed_image_negative + 1)/2
+
+    reconstructed_image_positive = (reconstructed_image_positive + 1)/2
+    save_image(reconstructed_image_positive, './static/uploads/covidified.jpg')
+
 
 # only true if you run script directly, if imported will be false
 if __name__ == '__main__':
