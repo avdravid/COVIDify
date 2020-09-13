@@ -34,6 +34,7 @@
     {%else%}
     <title>COVID-19 Effects</title>
     {%endif%}
+
   </head>
   <body>
     <header class="site-header">
@@ -57,24 +58,28 @@
             extensions)
           </p>
         </div>
-        <form
-          method="post"
-          enctype="multipart/form-data"
-          class="column centered-container"
-        >
-          {{form.hidden_tag()}}
-          <fieldset class="form-group">
-            <div class="form-group">
-              {{ form.hidden_tag() }} {{ form.file }}
-            </div>
-            <div class="form-group">
-              <input type="submit" />
-            </div>
-          </fieldset>
-        </form>
+        <div>
+         <form
+            method="post"
+            enctype="multipart/form-data"
+            class="column centered-container"
+         >
+            {{form.hidden_tag()}}
+            <fieldset class="form-group">
+               <div class="form-group">
+               {{ form.hidden_tag() }} {{ form.file }}
+               </div>
+               <div class="form-group">
+               <input type='submit' onclick="showLoad()"/>
+               </div>
+            </fieldset>
+         </form>
+         <div id='load-trigger' class="column centered-container" style="display:none">
+            <p>X-Ray image received! Scanning image.</p>
+            <div class="loader"></div>
+         </div>
       </div>
 
-      <!-- </div> -->
     </main>
     <footer class="footer-container fixed-bottom">
       <div>PennHacks Fall 2020</div>
@@ -100,5 +105,12 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+   <script type="text/javascript">
+      function showLoad() {
+         console.log("caught")
+         var T = document.getElementById("load-trigger");
+         T.style.display = "flex";  // <-- Set it to block
+      }
+   </script>
   </body>
 </html>
