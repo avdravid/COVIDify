@@ -1,1 +1,1 @@
-        return render_template("results.html")
+# here trigger the loady wheel

@@ -73,7 +73,6 @@ def upload():
             logging.info('Illegal file extension')
             flash('File must have extension .jpg, .jpeg, or .png', 'danger')
         else:
-            flash('File accepted!', 'success')
             # save accepted file to uploads folder
             try:
                 form.file.data.save('uploads/' + filename)
@@ -86,20 +85,9 @@ def upload():
             # here trigger the loady wheel
 
             gan_generate("dummy_path")
-            return render_template('loading.html')
+            return render_template('results.html')
 
     return render_template('upload.html', form=form)
-
-
-@app.route("/loading")
-def loading():
-    uploads = os.listdir("./uploads")
-    if uploads:
-        with open('./uploads/'+uploads[0], 'rb') as f:
-            gan_generate(f)
-        f.close()
-        return render_template("results.html")
-    return render_template("loading.html")
 
 
 # only true if you run script directly, if imported will be false
