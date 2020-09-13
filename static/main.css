@@ -211,7 +211,7 @@ a.custom-button:hover {
   width: 250px;
   height: 250px;
   object-fit: contain;
-  margin: 1.5em;
+  margin: 0.5em 1.5em;
 }
 
 /* info list styling */
