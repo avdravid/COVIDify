@@ -2,19 +2,18 @@
 {%block content%}
    <div class="column centered-container page-header">
       <h1>COVID-19 Lung Scanner</h1>
-      <p class="info">FIXME with correct information about GAN result on received lung x-ray 
-          image. maybe also include how this image was generated for those not familiar with 
-          GANs or that could be on a separate page.</p>
+      <p class="info">We built an Auxiliary-Classifier GAN (arXiv:1610.09585) that produces lung x-rays with or without COVID-19 properties based on an inputted condition. After the generator has been trained, an inputted healthy lung x-ray is encoded into a latent vector via gradient descent with a VGG perceptual loss (arXiv:1802.05701, arXiv:1603.08155). Then, a condition vector is concatenated with this latent vector and run through the generator to produce the same lung x-ray but with COVID-19 ground glass opacities. This model was written in Pytorch. Hyperparameters and code can be found at the following GitHub. The training data included around 2000 total 64x64 COVID positive and negative x-rays. 
+</p>
    </div>
    <div class="column centered-container">
        <p>X-Ray image successfully scanned!</p>
        <div class="image-results">
            <div class="column centered-container">
-                <img src="../static/temp.png" alt="Provided Lung X-Ray" class="img-fitted">
+                <img src="../static/uploads/original.jpg" alt="Provided Lung X-Ray" class="img-fitted">
                 <p>Your current lungs</p>
            </div>
            <div class="column centered-container">
-                <img src="../static/temp1.png" alt="COVID-19 Scanned and Identified Lung X-Ray" class="img-fitted">
+                <img src="../static/uploads/covidified.jpg" alt="COVID-19 Scanned and Identified Lung X-Ray" class="img-fitted">
                 <p>Covidified lungs</p>
            </div>
         </div>

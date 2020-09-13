@@ -15,12 +15,12 @@
     <!-- Font imports -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap" rel="stylesheet">
     {%if title%}
-    <title>Disease X-Ray GAN - {{title}} </title>
+    <title>COVIDify - {{title}} </title>
     {%else%}
-    <title>COVID-19 Effects</title>
+    <title>COVIDify</title>
     {%endif%}
 </head>
-<body>
+<body style="overflow: visible">
     <header class="site-header">
         <nav class="header-container fixed-top">
             <a class="nav-item" href="{{ url_for('home') }}">HOME</a>

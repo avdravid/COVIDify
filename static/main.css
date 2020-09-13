@@ -96,9 +96,10 @@ a.article-title:hover {
 }
 
 .header-container {
-  margin-top: 1em;
+  padding: 1em 0em;
   display: flex;
   justify-content: center;
+  background-color: #fafafa;
 }
 
 .footer-container {
@@ -106,7 +107,8 @@ a.article-title:hover {
   flex-direction: column;
   align-items: center;
   font-size: small;
-  margin-bottom: 2em;
+  padding: 1em 0 2em 0;
+  background-color: #fafafa;
 }
 
 .nav-item {
@@ -130,6 +132,11 @@ a.nav-item:hover {
   flex-direction: column;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 .centered-container {
   display: flex;
   align-items: center;
@@ -141,7 +148,7 @@ a.nav-item:hover {
 }
 
 .info {
-  width: 40%;
+  width: 60%;
 }
 
 .page-header {
@@ -206,10 +213,12 @@ a.custom-button:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-bottom: 6em;
 }
+
 .img-fitted {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
   margin: 0.5em 1.5em;
 }

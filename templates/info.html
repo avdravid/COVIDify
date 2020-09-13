@@ -2,23 +2,35 @@
 {%block content%}
    <div class="column centered-container page-header">
       <h1>COVID-19 Lung Scanner</h1>
-      <p class="info">FIXME include overview of how GAN works and is applied to this use case.</p>
+      <p class="info">We built an Auxiliary-Classifier GAN (arXiv:1610.09585) that produces lung x-rays with or without COVID-19 properties based on an inputted condition. After the generator has been trained, an inputted healthy lung x-ray is encoded into a latent vector via gradient descent with a VGG perceptual loss (arXiv:1802.05701, arXiv:1603.08155). Then, a condition vector is concatenated with this latent vector and run through the generator to produce the same lung x-ray but with COVID-19 ground glass opacities. This model was written in Pytorch. Hyperparameters and code can be found at the following GitHub. The training data included around 2000 total 64x64 COVID positive and negative x-rays. 
+</p>
    </div>
    <div class="column centered-container">
-        <div class="list">
-            <h2 class="text-center">Research and Data References</h2>
-            <ul>
-                <li><a href="">link1</a></li>
-                <li><a href="">link2</a></li>
-            </ul>
-        </div>
-        <div class="list">
-            <h2 class="text-center">COVID-19 Help References</h2>
-            <ul>
+        <div>
+            <h2 class="text-center">COVID-19 Lung X-Ray Samples</h2>
+            <div class='row'>
+                <div class="column centered-container">
+                    <img src="../static/sample_scans/neg1.png" alt="COVID-19 Negative case 1" class="img-fitted">
+                    <p>Negative Scan 1</p>
+                </div>
+                <div class="column centered-container">
+                    <img src="../static/sample_scans/neg2.png" alt="COVID-19 Negative case 2" class="img-fitted">
+                    <p>Negative Scan 2</p>
+                </div>
+                <div class="column centered-container">
+                    <img src="../static/sample_scans/pos1.png" alt="COVID-19 Positve case 1" class="img-fitted">
+                    <p>Positive Scan 1</p>
+                </div>
+                <div class="column centered-container">
+                    <img src="../static/sample_scans/pos2.png" alt="COVID-19 Postive case 2" class="img-fitted">
+                    <p>Positive Scan 2</p>
+                </div>
+            </div>
+            <!-- <ul>
                 <li><a href="https://www.cdc.gov/coronavirus/resources.html">CDC website</a> for the latest updates</li>
                 <li><a href="https://bestpractice.bmj.com/topics/en-us/3000168/references">Best Practices</a> on how to approach COVID-19</li>
                 <li><a href="https://landing.google.com/screener/covid19?source=google">Online Self Assessment</a> for free by Google</li>
-            </ul>
+            </ul> -->
         </div>
     </div> 
    </div>

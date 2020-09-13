@@ -16,7 +16,7 @@ class RegistrationForm(FlaskForm):
 
 class ButtonForm(FlaskForm):
     submit = SubmitField('Generate Image')
-    
+
 class UploadForm(FlaskForm):
     file = FileField()
 
