@@ -21,9 +21,11 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[-1].lower() in ALLOWED_EXTENSIONS
 
 
-def gan_generate(imagepath):
-    # generate new image from upload
+def gan_generate():
+    # generate new image from upload here
+    # the uploaded image will be in static/uploads/original.jpg
     time.sleep(2)
+    # write new image to static/uploads/covidified.jpg
 # check if file has correct extension
 
 
