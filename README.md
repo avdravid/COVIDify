@@ -16,7 +16,7 @@ Current layout of project
     - results.html - presents a side-by-side view of uploaded and generated x-ray images
     - info.html - general information about this web app and additional redirect links about COVID-19
 - .gitignore – standard .gitignore file for commits
-- PennApps_GAN_Model-Copy1.ipynb - GAN model training and testing in Jupyter Notebook
+- lung_GAN_Model.ipynb - GAN model training and testing in Jupyter Notebook
 - forms.py – outlines flask_wtf forms to be used 
 - app.py – main Flask project folder
 - lung_generator.pth - exported GAN model
